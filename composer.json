@@ -1,0 +1,21 @@
+{
+	"name": "frosty22/composer-components",
+	"type": "library",
+	"description": "Extending Composer for support install components in Nette.",
+	"license": ["BSD-3-Clause", "GPL-2.0", "GPL-3.0"],
+	"authors": [
+		{
+			"name": "Vít Ledvinka",
+			"homepage": "http://www.frosty22.cz"
+		}
+	],
+	"require": {
+		"php": ">= 5.3.0",
+		"nette/nette": "2.*"
+	},
+	"autoload": {
+		"psr-0": {
+			"ComposerComponents" : "src/"
+		}
+	}
+}

@@ -1,0 +1,4 @@
+tests/tmp/*
+ComposerComponentsTests/*/output/*
+ComposerComponentsTests/*/components/*
+.DS_Store

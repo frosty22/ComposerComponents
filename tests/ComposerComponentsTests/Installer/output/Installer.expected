@@ -1,0 +1,5 @@
+array(
+	'/Library/WebServer/localhost/development/app/libs/ComposerComponents/tests/ComposerComponentsTests/Installer/package/sample/src/js/test1.js' => 'js/test1.js',
+	'/Library/WebServer/localhost/development/app/libs/ComposerComponents/tests/ComposerComponentsTests/Installer/package/sample/src/js/test2.js' => 'js/test2.js',
+	'/Library/WebServer/localhost/development/app/libs/ComposerComponents/tests/ComposerComponentsTests/Installer/package/sample/src/js/test3.js' => 'js/test3.js',
+)

@@ -1,0 +1,45 @@
+{
+	"packages": [
+
+		{
+			"name" : "package/sample",
+			"extra" : {
+				"component" : {
+					"src" : "src/",
+					"scripts" : [
+						"js/test1.js",
+						"js/test2.js"
+					],
+					"styles" : [
+						"css/test1.css",
+						"css/test2.css"
+					],
+					"files" : [
+						"img/*"
+					]
+				}
+			}
+
+		},
+
+		{
+			"name" : "package/sample",
+			"extra" : {
+				"component" : {
+					"src" : "src/",
+					"scripts" : [
+						"js/test2.js",
+						"js/test3.js",
+						"js/test4.dupl.js"
+					],
+					"styles" : [
+						"css/test2.css",
+						"css/test3.css"
+					]
+				}
+			}
+
+		}
+
+	]
+}
