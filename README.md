@@ -58,9 +58,9 @@ class BasePresenter extends Nette\UI\Presenter {
 	}
 
 	/** @return \Composer\Components\Control\Control */
-	protected function createComponentComponents($name, \Composer\Components\Control\Control $control)
+	protected function createComponentComponents($name)
 	{
-		return $control;
+		return $this->componentsControl;
 	}
 
 }
