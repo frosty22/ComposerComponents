@@ -48,16 +48,16 @@ Podstatná je pouze ta část **extra.component**, zde je možné definovat zák
 ```php
 class BasePresenter extends Nette\UI\Presenter {
 
-	/** @var \Composer\Components\Control\Control $componentsControl */
+	/** @var \ComposerComponents\Control\Control $componentsControl */
 	protected $componentsControl;
 
-	/** @param \Composer\Components\Control\Control $componentsControl */
-	public function injectComponentsControl(\Composer\Components\Control\Control $componentsControl)
+	/** @param \ComposerComponents\Control\Control $componentsControl */
+	public function injectComponentsControl(\ComposerComponents\Control\Control $componentsControl)
 	{
 		$this->componentsControl = $componentsControl;
 	}
 
-	/** @return \Composer\Components\Control\Control */
+	/** @return \ComposerComponents\Control\Control */
 	protected function createComponentComponents($name)
 	{
 		return $this->componentsControl;

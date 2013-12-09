@@ -1,6 +1,6 @@
 <?php
 
-namespace Composer\Components\DI;
+namespace ComposerComponents\DI;
 
 use Nette\Config\CompilerExtension;
 
@@ -36,13 +36,13 @@ class InstallerExtension extends CompilerExtension
 		$cache = new \Nette\DI\Statement('Nette\Caching\Cache', array(1 => "composer-compiler"));
 
 		$installer = $builder->addDefinition($this->prefix('installer'))
-			->setClass('Composer\Components\Installer', array($config["lockFile"], $config["vendor"], $config["dir"]));
+			->setClass('ComposerComponents\Installer', array($config["lockFile"], $config["vendor"], $config["dir"]));
 
 		$builder->addDefinition($this->prefix('manager'))
-			->setClass('Composer\Components\Manager', array($installer, $cache, $config["uri"]));
+			->setClass('ComposerComponents\Manager', array($installer, $cache, $config["uri"]));
 
 		$builder->addDefinition($this->prefix('control'))
-			->setClass('Composer\Components\Control\Control');
+			->setClass('ComposerComponents\Control\Control');
 
 	}
 

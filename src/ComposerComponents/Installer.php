@@ -1,6 +1,6 @@
 <?php
 
-namespace Composer\Components;
+namespace ComposerComponents;
 
 /**
  *

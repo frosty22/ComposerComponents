@@ -1,8 +1,8 @@
 <?php
 
-namespace Composer\Components\Control;
+namespace ComposerComponents\Control;
 
-use Composer\Components\Manager;
+use ComposerComponents\Manager;
 
 /**
  *
