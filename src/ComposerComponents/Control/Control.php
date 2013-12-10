@@ -20,6 +20,18 @@ class Control extends \Nette\Application\UI\Control {
 
 
 	/**
+	 * @var array
+	 */
+	private $css;
+
+
+	/**
+	 * @var array
+	 */
+	private $js;
+
+
+	/**
 	 * @param Manager $manager
 	 */
 	public function __construct(Manager $manager)
@@ -31,12 +43,13 @@ class Control extends \Nette\Application\UI\Control {
 
 	/**
 	 * Render CSS for HTML
+	 * @param string|int $file
 	 */
-	public function renderCss()
+	public function renderCss($file = NULL)
 	{
 		$tpl = $this->createTemplate();
 		$tpl->setFile(__DIR__ . "/control.latte");
-		$tpl->css = $this->manager->getCssFiles();
+		$tpl->css = $this->getCss($file);
 		$tpl->js = array();
 		$tpl->render();
 	}
@@ -44,13 +57,14 @@ class Control extends \Nette\Application\UI\Control {
 
 	/**
 	 * Render JS for HTML
+	 * @param string|int $file
 	 */
-	public function renderJs()
+	public function renderJs($file = NULL)
 	{
 		$tpl = $this->createTemplate();
 		$tpl->setFile(__DIR__ . "/control.latte");
 		$tpl->css = array();
-		$tpl->js = $this->manager->getJsFiles();
+		$tpl->js = $this->getJs($file);
 		$tpl->render();
 	}
 
@@ -62,9 +76,57 @@ class Control extends \Nette\Application\UI\Control {
 	{
 		$tpl = $this->createTemplate();
 		$tpl->setFile(__DIR__ . "/control.latte");
-		$tpl->css = $this->manager->getCssFiles();
-		$tpl->js = $this->manager->getJsFiles();
+		$tpl->css = $this->getCss();
+		$tpl->js = $this->getJs();
 		$tpl->render();
+	}
+
+
+	/**
+	 * @param string $file
+	 * @return array
+	 */
+	protected function getCss($file = NULL)
+	{
+		if (!isset($this->css))
+			$this->css = $this->manager->getCssFiles();
+
+		if ($file === NULL) {
+			$this->css = array();
+			return $this->css;
+		}
+
+		if (isset($this->css[$file])) {
+			$return = array($file => $this->css[$file]);
+			unset($this->css[$file]);
+			return $return;
+		}
+
+		return array();
+	}
+
+
+	/**
+	 * @param string $file
+	 * @return array
+	 */
+	protected function getJs($file = NULL)
+	{
+		if (!isset($this->js))
+			$this->js = $this->manager->getJsFiles();
+
+		if ($file === NULL) {
+			$this->js = array();
+			return $this->js;
+		}
+
+		if (isset($this->js[$file])) {
+			$return = array($file => $this->js[$file]);
+			unset($this->js[$file]);
+			return $return;
+		}
+
+		return array();
 	}
 
 }
