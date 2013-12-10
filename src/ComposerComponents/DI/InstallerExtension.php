@@ -19,6 +19,7 @@ class InstallerExtension extends CompilerExtension
 	 */
 	private $defaults = array(
 		"lockFile" 		=> "%appDir%/../composer.lock",
+		"composerFile"	=> "%appDir%/../composer.json",
 		"dir"			=> "%wwwDir%/components",
 		"uri"			=> "/components",
 		"vendor"		=> "%appDir%/../vendor"
@@ -36,7 +37,7 @@ class InstallerExtension extends CompilerExtension
 		$cache = new \Nette\DI\Statement('Nette\Caching\Cache', array(1 => "composer-compiler"));
 
 		$installer = $builder->addDefinition($this->prefix('installer'))
-			->setClass('ComposerComponents\Installer', array($config["lockFile"], $config["vendor"], $config["dir"]));
+			->setClass('ComposerComponents\Installer', array($config["lockFile"], $config["composerFile"], $config["vendor"], $config["dir"]));
 
 		$builder->addDefinition($this->prefix('manager'))
 			->setClass('ComposerComponents\Manager', array($installer, $cache, $config["uri"]));

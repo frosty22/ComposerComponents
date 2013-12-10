@@ -19,6 +19,13 @@ class Installer extends \Nette\Object {
 
 
 	/**
+	 * Path to the composer json file
+	 * @var string
+	 */
+	private $composerFile;
+
+
+	/**
 	 * Path to the components dir
 	 * @var string
 	 */
@@ -48,12 +55,14 @@ class Installer extends \Nette\Object {
 
 	/**
 	 * @param string $lockFile
+	 * @param string $composerFile
 	 * @param string $vendorDir
 	 * @param string $dir
 	 */
-	public function __construct($lockFile, $vendorDir, $dir)
+	public function __construct($lockFile, $composerFile, $vendorDir, $dir)
 	{
 		$this->composerLockFile = $lockFile;
+		$this->composerFile = $composerFile;
 		$this->componentsDir = $dir;
 		$this->vendorDir = $vendorDir;
 	}
@@ -98,7 +107,10 @@ class Installer extends \Nette\Object {
 	protected function run()
 	{
 		if (!file_exists($this->composerLockFile))
-			throw new \Nette\FileNotFoundException("Composer file '{$this->composerLockFile}' not found.");
+			throw new \Nette\FileNotFoundException("Composer lock file '{$this->composerLockFile}' not found.");
+
+		if (!file_exists($this->composerFile))
+			throw new \Nette\FileNotFoundException("Composer file '{$this->composerFile}' not found.");
 
 		if (!is_dir($this->componentsDir))
 			throw new \Nette\DirectoryNotFoundException("Components dir '{$this->componentsDir}' not found.");
@@ -108,30 +120,43 @@ class Installer extends \Nette\Object {
 
 		$composer = json_decode(file_get_contents($this->composerLockFile));
 		foreach ($composer->packages as $package) {
-			if (isset($package->extra) && isset($package->extra->component)) {
-
-				$path = $this->vendorDir . "/" . $package->name;
-				if (!is_dir($path))
-					throw new \Nette\DirectoryNotFoundException("Package dir '{$path}' not found.");
-
-				$path = isset($package->extra->component->src) ? $path . "/" . $package->extra->component->src : $path . "/";
-				if (!is_dir($path))
-					throw new \Nette\DirectoryNotFoundException("Package component's dir '{$path}' not found.");
-
-				if (isset($package->extra->component->styles))
-					$this->css += $this->processFiles($path, $package->extra->component->styles);
-
-				if (isset($package->extra->component->scripts))
-					$this->js += $this->processFiles($path, $package->extra->component->scripts);
-
-				if (isset($package->extra->component->files))
-					$this->processFiles($path, $package->extra->component->files);
-
-			}
+			$this->parsePackage($this->vendorDir . "/" . $package->name, $package);
 		}
+
+		$composer = json_decode(file_get_contents($this->composerFile));
+		$this->parsePackage(dirname($this->composerFile), $composer);
 
 		$this->css = $this->removeDuplicates($this->css);
 		$this->js = $this->removeDuplicates($this->js);
+	}
+
+
+	/**
+	 * @param string $path
+	 * @param string $package
+	 * @throws \Nette\DirectoryNotFoundException
+	 */
+	protected function parsePackage($path, $package)
+	{
+		if (isset($package->extra) && isset($package->extra->component)) {
+
+			if (!is_dir($path))
+				throw new \Nette\DirectoryNotFoundException("Package dir '{$path}' not found.");
+
+			$path = isset($package->extra->component->src) ? $path . "/" . $package->extra->component->src : $path . "/";
+			if (!is_dir($path))
+				throw new \Nette\DirectoryNotFoundException("Package component's dir '{$path}' not found.");
+
+			if (isset($package->extra->component->styles))
+				$this->css += $this->processFiles($path, $package->extra->component->styles);
+
+			if (isset($package->extra->component->scripts))
+				$this->js += $this->processFiles($path, $package->extra->component->scripts);
+
+			if (isset($package->extra->component->files))
+				$this->processFiles($path, $package->extra->component->files);
+
+		}
 	}
 
 
@@ -140,6 +165,7 @@ class Installer extends \Nette\Object {
 	 * @param string $path
 	 * @param array $files
 	 * @return array
+	 * @throws \Nette\FileNotFoundException
 	 */
 	protected function processFiles($path, array $files)
 	{

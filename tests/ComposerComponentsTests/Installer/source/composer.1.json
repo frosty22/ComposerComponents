@@ -1,0 +1,9 @@
+{
+	"name": "frosty22/sandbox",
+	"extra": {
+		"component" : {
+			"src" : "own/",
+			"scripts" : [ "js/foo.js" ]
+		}
+	}
+}
