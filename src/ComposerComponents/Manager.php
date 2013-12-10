@@ -103,7 +103,7 @@ class Manager extends \Nette\Object {
 
 
 			$this->cache->save("files", $files, array(
-				\Nette\Caching\Cache::FILES => $this->installer->getComposerLockFile()
+				\Nette\Caching\Cache::FILES => $this->installer->getDependencyFiles()
 			));
 		}
 

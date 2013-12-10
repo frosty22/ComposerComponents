@@ -69,12 +69,12 @@ class Installer extends \Nette\Object {
 
 
 	/**
-	 * Get composer lock filename
+	 * Get array of depended files
 	 * @return string
 	 */
-	public function getComposerLockFile()
+	public function getDependencyFiles()
 	{
-		return $this->composerLockFile;
+		return array($this->composerLockFile, $this->composerFile);
 	}
 
 
