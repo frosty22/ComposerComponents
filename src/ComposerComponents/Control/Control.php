@@ -92,8 +92,9 @@ class Control extends \Nette\Application\UI\Control {
 			$this->css = $this->manager->getCssFiles();
 
 		if ($file === NULL) {
+			$return = $this->css;
 			$this->css = array();
-			return $this->css;
+			return $return;
 		}
 
 		if (isset($this->css[$file])) {
@@ -116,8 +117,9 @@ class Control extends \Nette\Application\UI\Control {
 			$this->js = $this->manager->getJsFiles();
 
 		if ($file === NULL) {
+			$return = $this->js;
 			$this->js = array();
-			return $this->js;
+			return $return;
 		}
 
 		if (isset($this->js[$file])) {
