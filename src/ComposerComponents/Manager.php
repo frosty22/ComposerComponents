@@ -123,7 +123,7 @@ class Manager extends \Nette\Object {
 		$result = array();
 		foreach ($files as $path => $uri) {
 			$modified = filemtime($path);
-			$result[] = $this->componentsUri . "/" . $uri . "?" . $modified;
+			$result[$uri] = $this->componentsUri . "/" . $uri . "?" . $modified;
 		}
 		return $result;
 	}
