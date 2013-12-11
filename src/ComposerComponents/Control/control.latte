@@ -1,7 +1,7 @@
 {foreach $css as $uri}
-	<link rel="stylesheet" type="text/css" href="{$uri}">
+	<link rel="stylesheet" type="text/css" href="{$basePath}{$uri}">
 {/foreach}
 
 {foreach $js as $uri}
-	<script type="text/javascript" src="{$uri}"></script>
+	<script type="text/javascript" src="{$basePath}{$uri}"></script>
 {/foreach}
